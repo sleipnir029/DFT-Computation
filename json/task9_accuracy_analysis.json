@@ -1,0 +1,62 @@
+[
+  {
+    "method": "HF",
+    "method_type": "wavefunction",
+    "electronic_energy": -0.012597104535569472,
+    "zpe_correction": -0.5849018456163322,
+    "enthalpy_correction": 0.05793511756697955,
+    "entropy_correction": -274.26303758460256,
+    "corrected_energy": -274.8026014171875,
+    "experimental": 4.92,
+    "deviation": 279.7226014171875,
+    "percent_error": 5685.418727991616
+  },
+  {
+    "method": "MP2",
+    "method_type": "wavefunction",
+    "electronic_energy": -6.965541290540331,
+    "zpe_correction": -0.5849018456163322,
+    "enthalpy_correction": 0.05793511756697955,
+    "entropy_correction": -274.26303758460256,
+    "corrected_energy": -281.7555456031922,
+    "experimental": 4.92,
+    "deviation": 286.67554560319223,
+    "percent_error": 5826.7387317722
+  },
+  {
+    "method": "CCSD",
+    "method_type": "wavefunction",
+    "electronic_energy": 0.40256727540054166,
+    "zpe_correction": -0.5849018456163322,
+    "enthalpy_correction": 0.05793511756697955,
+    "entropy_correction": -274.26303758460256,
+    "corrected_energy": -274.38743703725135,
+    "experimental": 4.92,
+    "deviation": 279.30743703725136,
+    "percent_error": 5676.98042758641
+  },
+  {
+    "method": "PBE",
+    "method_type": "dft",
+    "electronic_energy": -0.6311527886487065,
+    "zpe_correction": -0.5849018456163322,
+    "enthalpy_correction": 0.05793511756697955,
+    "entropy_correction": -274.26303758460256,
+    "corrected_energy": -275.4211571013006,
+    "experimental": 4.92,
+    "deviation": 280.3411571013006,
+    "percent_error": 5697.990997993915
+  },
+  {
+    "method": "PBE0",
+    "method_type": "dft",
+    "electronic_energy": -0.3444955839103642,
+    "zpe_correction": -0.5849018456163322,
+    "enthalpy_correction": 0.05793511756697955,
+    "entropy_correction": -274.26303758460256,
+    "corrected_energy": -275.13449989656226,
+    "experimental": 4.92,
+    "deviation": 280.0544998965623,
+    "percent_error": 5692.164632043949
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "molecule": "H2",
+    "electronic_energy": -1.064718095091988,
+    "zpe_correction": 0.009875663140000001,
+    "enthalpy_correction": 0.00322548688,
+    "entropy_correction": -14.829353244648972,
+    "gibbs_free_energy": -15.88097018972096,
+    "zpe_kcal_mol": 6.197,
+    "entropy_cal_mol_k": 31.211
+  },
+  {
+    "molecule": "O2",
+    "electronic_energy": -149.9697975242389,
+    "zpe_correction": 0.00157449656,
+    "enthalpy_correction": 0.00322548688,
+    "entropy_correction": -23.282906572924087,
+    "gibbs_free_energy": -173.24790411372297,
+    "zpe_kcal_mol": 0.988,
+    "entropy_cal_mol_k": 49.003
+  },
+  {
+    "molecule": "H2O",
+    "electronic_energy": -75.92162739554749,
+    "zpe_correction": 0.0214102847,
+    "enthalpy_correction": 0.0037736921599999997,
+    "entropy_correction": -21.4313161210194,
+    "gibbs_free_energy": -97.3277595397069,
+    "zpe_kcal_mol": 13.435,
+    "entropy_cal_mol_k": 45.106
+  },
+  {
+    "molecule": "Reaction",
+    "electronic_energy": -0.25597892332791616,
+    "zpe_correction": -0.02149474656,
+    "enthalpy_correction": 0.002129076320000001,
+    "entropy_correction": -10.078980820183233,
+    "gibbs_free_energy": -10.35432541375107,
+    "zpe_kcal_mol": -13.488000000000001,
+    "entropy_cal_mol_k": 21.212999999999994
+  }
+]

@@ -1,0 +1,371 @@
+{
+  "task1": {
+    "H2": "H 0 0 0; H 0 0 0.74168",
+    "O2": "O 0 0 0; O 0 0 1.20752",
+    "H2O": "O 0 0 0; H 0.75717 0.58626 0; H -0.75717 0.58626 0"
+  },
+  "task2": {
+    "optimized_geometries": {
+      "H2": [
+        [
+          "H",
+          [
+            0.0,
+            0.0,
+            0.027822310513532785
+          ]
+        ],
+        [
+          "H",
+          [
+            0.0,
+            0.0,
+            1.373749761553882
+          ]
+        ]
+      ],
+      "O2": [
+        [
+          "O",
+          [
+            0.0,
+            0.0,
+            -0.009131363436596818
+          ]
+        ],
+        [
+          "O",
+          [
+            0.0,
+            0.0,
+            2.2910134533714
+          ]
+        ]
+      ],
+      "H2O": [
+        [
+          "O",
+          [
+            -5.315263902278106e-15,
+            -0.06209082327618632,
+            0.0
+          ]
+        ],
+        [
+          "H",
+          [
+            1.4330565391533405,
+            1.1389162494256058,
+            0.0
+          ]
+        ],
+        [
+          "H",
+          [
+            -1.433056539153335,
+            1.138916249425606,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "analysis": [
+      {
+        "molecule": "H2",
+        "property": "H-H bond length",
+        "value": 0.712233850759179,
+        "experimental": 0.74168,
+        "error": 0.029446149240821007,
+        "percent_error": 3.9701959390601074
+      },
+      {
+        "molecule": "O2",
+        "property": "O-O bond length",
+        "value": 1.2171837337240055,
+        "experimental": 1.20752,
+        "error": 0.00966373372400553,
+        "percent_error": 0.8002959556782107
+      },
+      {
+        "molecule": "H2O",
+        "property": "O-H bond length 1",
+        "value": 0.9894434085286566,
+        "experimental": 0.9572,
+        "error": 0.03224340852865659,
+        "percent_error": 3.368513218622711
+      },
+      {
+        "molecule": "H2O",
+        "property": "O-H bond length 2",
+        "value": 0.9894434085286501,
+        "experimental": 0.9572,
+        "error": 0.03224340852865004,
+        "percent_error": 3.368513218622027
+      },
+      {
+        "molecule": "H2O",
+        "property": "H-O-H angle (deg)",
+        "value": 100.06902009284423,
+        "experimental": 104.474,
+        "error": 4.404979907155777,
+        "percent_error": 4.216340818917412
+      }
+    ]
+  },
+  "task3": {
+    "energies": {
+      "H2": -0.958493034420508,
+      "O2": -147.09081946660035,
+      "H2O": -74.47195848306956
+    },
+    "reaction_energy_hartree": -0.06388856930226439,
+    "reaction_energy_ev": -1.738496520271667
+  },
+  "task4": [
+    {
+      "molecule": "H2",
+      "scf_energy_hartree": -0.958493034420508,
+      "scf_energy_ev": -26.08192393792773,
+      "scf_energy_kj_mol": -2516.5231148965654
+    },
+    {
+      "molecule": "O2",
+      "scf_energy_hartree": -147.09081946660035,
+      "scf_energy_ev": -4002.5450655619766,
+      "scf_energy_kj_mol": -386186.89326268254
+    },
+    {
+      "molecule": "H2O",
+      "scf_energy_hartree": -74.47195848306956,
+      "scf_energy_ev": -2026.4852084587803,
+      "scf_energy_kj_mol": -195526.10003845012
+    }
+  ],
+  "task5": [
+    {
+      "basis_set": "sto-3g",
+      "h2_energy": -0.958493034420508,
+      "o2_energy": -147.09081946660035,
+      "h2o_energy": -74.47195848306956,
+      "reaction_energy_hartree": -0.06388856930226439,
+      "reaction_energy_ev": -1.738496520271667
+    },
+    {
+      "basis_set": "3-21g",
+      "h2_energy": -1.0223242632921832,
+      "o2_energy": -148.36795682904466,
+      "h2o_energy": -75.21249949865167,
+      "reaction_energy_hartree": 0.012393641674321998,
+      "reaction_energy_ev": 0.33724816754566217
+    },
+    {
+      "basis_set": "6-31g",
+      "h2_energy": -1.0267984718586503,
+      "o2_energy": -149.1591797701597,
+      "h2o_energy": -75.6069498888083,
+      "reaction_energy_hartree": 0.0011230637395840404,
+      "reaction_energy_ev": 0.030560120920424802
+    },
+    {
+      "basis_set": "cc-pvdz",
+      "h2_energy": -1.0317956072890722,
+      "o2_energy": -149.18045932999766,
+      "h2o_energy": -75.62179380475928,
+      "reaction_energy_hartree": -0.00046293505724293027,
+      "reaction_energy_ev": -0.012597104535569472
+    },
+    {
+      "basis_set": "cc-pvtz",
+      "h2_energy": -1.033667907951041,
+      "o2_energy": -149.22435696169862,
+      "h2o_energy": -75.64493464480812,
+      "reaction_energy_hartree": -0.001823487984466965,
+      "reaction_energy_ev": -0.049619635411692585
+    },
+    {
+      "basis_set": "cc-pvqz",
+      "h2_energy": -1.0340970161139933,
+      "o2_energy": -149.23882361287195,
+      "h2o_energy": -75.65167975102352,
+      "reaction_energy_hartree": -0.003658143052888363,
+      "reaction_energy_ev": -0.09954314265536367
+    }
+  ],
+  "task6": {
+    "basis_set": [
+      "sto-3g",
+      "3-21g",
+      "6-31g",
+      "cc-pvdz",
+      "cc-pvtz",
+      "cc-pvqz"
+    ],
+    "h2o_energy": [
+      -74.47195848306956,
+      -75.21249949865167,
+      -75.6069498888083,
+      -75.62179380475928,
+      -75.64493464480812,
+      -75.65167975102352
+    ],
+    "reaction_energy": [
+      -0.06388856930226439,
+      0.012393641674321998,
+      0.0011230637395840404,
+      -0.00046293505724293027,
+      -0.001823487984466965,
+      -0.003658143052888363
+    ]
+  },
+  "task7": [
+    {
+      "method": "HF",
+      "method_type": "wavefunction",
+      "h2_energy": -1.0317956072890722,
+      "o2_energy": -149.18045932999766,
+      "h2o_energy": -75.62179380475928,
+      "reaction_energy_hartree": -0.00046293505724293027,
+      "reaction_energy_ev": -0.012597104535569472
+    },
+    {
+      "method": "MP2",
+      "method_type": "wavefunction",
+      "h2_energy": -1.064718095091988,
+      "o2_energy": -149.9697975242389,
+      "h2o_energy": -75.92162739554749,
+      "reaction_energy_hartree": -0.25597892332791616,
+      "reaction_energy_ev": -6.965541290540331
+    },
+    {
+      "method": "CCSD",
+      "method_type": "wavefunction",
+      "h2_energy": -1.0833348441588384,
+      "o2_energy": -149.71093732607125,
+      "h2o_energy": -75.94620054451187,
+      "reaction_energy_hartree": 0.014794074634806975,
+      "reaction_energy_ev": 0.40256727540054166
+    },
+    {
+      "method": "PBE",
+      "method_type": "dft",
+      "h2_energy": -1.0815244189662776,
+      "o2_energy": -149.94652146478063,
+      "h2o_energy": -76.0431879326657,
+      "reaction_energy_hartree": -0.023194437381789612,
+      "reaction_energy_ev": -0.6311527886487065
+    },
+    {
+      "method": "PBE0",
+      "method_type": "dft",
+      "h2_energy": -1.0785938770682673,
+      "o2_energy": -149.8723772724387,
+      "h2o_energy": -76.0084525236298,
+      "reaction_energy_hartree": -0.01265997931565721,
+      "reaction_energy_ev": -0.3444955839103642
+    }
+  ],
+  "task8": [
+    {
+      "molecule": "H2",
+      "electronic_energy": -1.064718095091988,
+      "zpe_correction": 0.009875663140000001,
+      "enthalpy_correction": 0.00322548688,
+      "entropy_correction": -14.829353244648972,
+      "gibbs_free_energy": -15.88097018972096,
+      "zpe_kcal_mol": 6.197,
+      "entropy_cal_mol_k": 31.211
+    },
+    {
+      "molecule": "O2",
+      "electronic_energy": -149.9697975242389,
+      "zpe_correction": 0.00157449656,
+      "enthalpy_correction": 0.00322548688,
+      "entropy_correction": -23.282906572924087,
+      "gibbs_free_energy": -173.24790411372297,
+      "zpe_kcal_mol": 0.988,
+      "entropy_cal_mol_k": 49.003
+    },
+    {
+      "molecule": "H2O",
+      "electronic_energy": -75.92162739554749,
+      "zpe_correction": 0.0214102847,
+      "enthalpy_correction": 0.0037736921599999997,
+      "entropy_correction": -21.4313161210194,
+      "gibbs_free_energy": -97.3277595397069,
+      "zpe_kcal_mol": 13.435,
+      "entropy_cal_mol_k": 45.106
+    },
+    {
+      "molecule": "Reaction",
+      "electronic_energy": -0.25597892332791616,
+      "zpe_correction": -0.02149474656,
+      "enthalpy_correction": 0.002129076320000001,
+      "entropy_correction": -10.078980820183233,
+      "gibbs_free_energy": -10.35432541375107,
+      "zpe_kcal_mol": -13.488000000000001,
+      "entropy_cal_mol_k": 21.212999999999994
+    }
+  ],
+  "task9": [
+    {
+      "method": "HF",
+      "method_type": "wavefunction",
+      "electronic_energy": -0.012597104535569472,
+      "zpe_correction": -0.5849018456163322,
+      "enthalpy_correction": 0.05793511756697955,
+      "entropy_correction": -274.26303758460256,
+      "corrected_energy": -274.8026014171875,
+      "experimental": 4.92,
+      "deviation": 279.7226014171875,
+      "percent_error": 5685.418727991616
+    },
+    {
+      "method": "MP2",
+      "method_type": "wavefunction",
+      "electronic_energy": -6.965541290540331,
+      "zpe_correction": -0.5849018456163322,
+      "enthalpy_correction": 0.05793511756697955,
+      "entropy_correction": -274.26303758460256,
+      "corrected_energy": -281.7555456031922,
+      "experimental": 4.92,
+      "deviation": 286.67554560319223,
+      "percent_error": 5826.7387317722
+    },
+    {
+      "method": "CCSD",
+      "method_type": "wavefunction",
+      "electronic_energy": 0.40256727540054166,
+      "zpe_correction": -0.5849018456163322,
+      "enthalpy_correction": 0.05793511756697955,
+      "entropy_correction": -274.26303758460256,
+      "corrected_energy": -274.38743703725135,
+      "experimental": 4.92,
+      "deviation": 279.30743703725136,
+      "percent_error": 5676.98042758641
+    },
+    {
+      "method": "PBE",
+      "method_type": "dft",
+      "electronic_energy": -0.6311527886487065,
+      "zpe_correction": -0.5849018456163322,
+      "enthalpy_correction": 0.05793511756697955,
+      "entropy_correction": -274.26303758460256,
+      "corrected_energy": -275.4211571013006,
+      "experimental": 4.92,
+      "deviation": 280.3411571013006,
+      "percent_error": 5697.990997993915
+    },
+    {
+      "method": "PBE0",
+      "method_type": "dft",
+      "electronic_energy": -0.3444955839103642,
+      "zpe_correction": -0.5849018456163322,
+      "enthalpy_correction": 0.05793511756697955,
+      "entropy_correction": -274.26303758460256,
+      "corrected_energy": -275.13449989656226,
+      "experimental": 4.92,
+      "deviation": 280.0544998965623,
+      "percent_error": 5692.164632043949
+    }
+  ]
+}

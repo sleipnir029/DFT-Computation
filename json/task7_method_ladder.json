@@ -1,0 +1,47 @@
+[
+  {
+    "method": "HF",
+    "method_type": "wavefunction",
+    "h2_energy": -1.0317956072890722,
+    "o2_energy": -149.18045932999766,
+    "h2o_energy": -75.62179380475928,
+    "reaction_energy_hartree": -0.00046293505724293027,
+    "reaction_energy_ev": -0.012597104535569472
+  },
+  {
+    "method": "MP2",
+    "method_type": "wavefunction",
+    "h2_energy": -1.064718095091988,
+    "o2_energy": -149.9697975242389,
+    "h2o_energy": -75.92162739554749,
+    "reaction_energy_hartree": -0.25597892332791616,
+    "reaction_energy_ev": -6.965541290540331
+  },
+  {
+    "method": "CCSD",
+    "method_type": "wavefunction",
+    "h2_energy": -1.0833348441588384,
+    "o2_energy": -149.71093732607125,
+    "h2o_energy": -75.94620054451187,
+    "reaction_energy_hartree": 0.014794074634806975,
+    "reaction_energy_ev": 0.40256727540054166
+  },
+  {
+    "method": "PBE",
+    "method_type": "dft",
+    "h2_energy": -1.0815244189662776,
+    "o2_energy": -149.94652146478063,
+    "h2o_energy": -76.0431879326657,
+    "reaction_energy_hartree": -0.023194437381789612,
+    "reaction_energy_ev": -0.6311527886487065
+  },
+  {
+    "method": "PBE0",
+    "method_type": "dft",
+    "h2_energy": -1.0785938770682673,
+    "o2_energy": -149.8723772724387,
+    "h2o_energy": -76.0084525236298,
+    "reaction_energy_hartree": -0.01265997931565721,
+    "reaction_energy_ev": -0.3444955839103642
+  }
+]
