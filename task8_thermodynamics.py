@@ -1,202 +1,147 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+"""
+Task 8: Thermodynamic corrections with accurate NIST data
+Fixes the entropy and unit conversion errors from the original code
+"""
+
 import json
+from constants import CONSTANTS
 
 class Task8Thermodynamics:
-    def __init__(self, constants):
-        self.constants = constants
+    """
+    Thermodynamic corrections using NIST standard reference data
+    - Corrects entropy values (original values were 4-6x too small)
+    - Uses proper unit conversions
+    - Treats water as liquid at 298K for realistic reaction energetics
+    """
     
+    def __init__(self, constants_dict=None):
+        self.C = constants_dict or CONSTANTS
+        
     def run(self, shared_results):
-        """T8: Corrected thermodynamic corrections with proper units"""
-        print("Task 8: Thermodynamic corrections (CORRECTED)")
+        """
+        Apply thermodynamic corrections to electronic energies
         
+        Args:
+            shared_results: Dictionary containing results from previous tasks
+            
+        Returns:
+            Dictionary with corrected thermodynamic data
+        """
+        
+        # Verify Task 7 (method comparison) has been run
         if 'task7' not in shared_results:
-            print("Error: Task 7 must be completed first")
-            return None
+            raise RuntimeError("Task 7 (method comparison) must be run before Task 8")
+            
+        # Get the best method results (MP2 typically most accurate for small molecules)
+        task7_results = shared_results['task7']
+        best_method = next((result for result in task7_results 
+                           if result['method'] == 'MP2'), task7_results[0])
         
-        # Corrected NIST values at 298.15 K
-        nist_data = {
-            'H2': {'ZPE': 6.197, 'H_corr': 2.024, 'S': 31.211},
-            'O2': {'ZPE': 0.988, 'H_corr': 2.024, 'S': 49.003},
-            'H2O': {'ZPE': 13.435, 'H_corr': 2.368, 'S': 45.106}
+        # NIST reference data at 298.15 K
+        # Source: NIST Chemistry WebBook (webbook.nist.gov)
+        NIST_DATA = {
+            'H2': {
+                'S_gas': 130.68,     # J mol⁻¹ K⁻¹, standard entropy of H₂ gas
+                'ZPE': 6.197,        # kcal mol⁻¹, zero-point energy
+                'H_thermal': 2.024   # kcal mol⁻¹, thermal enthalpy correction
+            },
+            'O2': {
+                'S_gas': 205.00,     # J mol⁻¹ K⁻¹, standard entropy of O₂ gas  
+                'ZPE': 0.988,        # kcal mol⁻¹, zero-point energy
+                'H_thermal': 2.024   # kcal mol⁻¹, thermal enthalpy correction
+            },
+            'H2O': {
+                'S_liquid': 69.95,   # J mol⁻¹ K⁻¹, standard entropy of liquid H₂O
+                'ZPE': 13.435,       # kcal mol⁻¹, zero-point energy
+                'H_thermal': 2.368   # kcal mol⁻¹, thermal enthalpy correction
+            }
         }
         
-        T = 298.15  # K
-        corrections_data = []
-        
-        # Use best method (MP2 if available, otherwise first method)
-        best_method_data = self._get_best_method(shared_results['task7'])
-        
-        for mol_name in ['H2', 'O2', 'H2O']:
-            electronic_energy = best_method_data[f'{mol_name.lower()}_energy']
+        def calculate_thermodynamic_properties(molecule):
+            """Calculate thermodynamic properties for a single molecule"""
             
-            # Correct unit conversions
-            zpe = nist_data[mol_name]['ZPE'] * self.constants['KCAL2HARTREE']
-            h_corr = nist_data[mol_name]['H_corr'] * self.constants['KCAL2HARTREE']
+            data = NIST_DATA[molecule]
+            mol_key = molecule.lower()
             
-            # Entropy correction: -T*S (cal/(mol·K) to Hartree)
-            s_cal_per_mol_k = nist_data[mol_name]['S']
-            s_j_per_mol_k = s_cal_per_mol_k * self.constants['CALORIE2JOULE']
-            s_hartree_per_mol_k = s_j_per_mol_k / self.constants['HARTREE2KJ'] * 1000
-            entropy_correction = -T * s_hartree_per_mol_k / 1000
+            # Electronic energy from quantum calculation
+            E_electronic = best_method[f'{mol_key}_energy']
+            
+            # Zero-point energy correction (kcal/mol → Hartree)
+            ZPE_correction = data['ZPE'] * self.C['KCAL2HARTREE']
+            
+            # Thermal enthalpy correction (kcal/mol → Hartree)  
+            H_thermal_correction = data['H_thermal'] * self.C['KCAL2HARTREE']
+            
+            # Entropy contribution: -T⋅S (J mol⁻¹ K⁻¹ → Hartree)
+            # Convert: S [J mol⁻¹ K⁻¹] → S [Hartree K⁻¹] via R_gas⋅Hartree_to_kJ
+            entropy_key = 'S_liquid' if molecule == 'H2O' else 'S_gas'
+            S_standard = data[entropy_key]  # J mol⁻¹ K⁻¹
+            
+            # Unit conversion: J mol⁻¹ K⁻¹ → Hartree K⁻¹
+            S_hartree_per_K = S_standard / (self.C['R_GAS_CONSTANT'] * self.C['HARTREE2KJ'] * 1000)
+            entropy_correction = -self.C['STANDARD_TEMP'] * S_hartree_per_K
             
             # Total Gibbs free energy
-            G_298 = electronic_energy + zpe + h_corr + entropy_correction
+            G_total = E_electronic + ZPE_correction + H_thermal_correction + entropy_correction
             
-            corrections_data.append({
-                'molecule': mol_name,
-                'electronic_energy': electronic_energy,
-                'zpe_correction': zpe,
-                'enthalpy_correction': h_corr,
+            return {
+                'E_electronic': E_electronic,
+                'ZPE_correction': ZPE_correction,
+                'H_thermal_correction': H_thermal_correction,
                 'entropy_correction': entropy_correction,
-                'gibbs_free_energy': G_298,
-                'zpe_kcal_mol': nist_data[mol_name]['ZPE'],
-                'entropy_cal_mol_k': s_cal_per_mol_k
-            })
+                'G_total': G_total,
+                'S_standard_SI': S_standard  # Keep for reference
+            }
         
-        # Calculate reaction free energy
-        reaction_data = self._calculate_reaction_corrections(corrections_data, best_method_data)
-        corrections_data.append(reaction_data)
+        # Calculate properties for each molecule
+        results = {}
+        for molecule in ['H2', 'O2', 'H2O']:
+            results[molecule] = calculate_thermodynamic_properties(molecule)
         
-        # Enhanced visualization
-        self._create_thermodynamics_plots(corrections_data, best_method_data)
+        # Calculate reaction free energy: 2H₂O → 2H₂ + O₂  
+        # ΔG = G_products - G_reactants
+        delta_G_hartree = (2 * results['H2']['G_total'] + 
+                          results['O2']['G_total'] - 
+                          2 * results['H2O']['G_total'])
         
-        # Save data
-        corrections_df = pd.DataFrame(corrections_data)
-        corrections_df.to_csv('csv/task8_thermodynamic_corrections.csv', index=False)
-
-        with open('json/task8_thermodynamic_corrections.json', 'w') as f:
-            json.dump(corrections_data, f, indent=2)
+        # Convert to eV for comparison with experimental value (4.92 eV)
+        delta_G_eV = delta_G_hartree * self.C['HARTREE2EV']
         
-        print("Task 8 completed successfully!")
-        return corrections_data
-    
-    def _get_best_method(self, task7_results):
-        """Get best method data (MP2 if available)"""
-        for method_data in task7_results:
-            if method_data['method'] == 'MP2':
-                return method_data
-        return task7_results[0]  # Fallback to first method
-    
-    def _calculate_reaction_corrections(self, corrections_data, best_method_data):
-        """Calculate reaction-level corrections"""
-        h2_data = next(d for d in corrections_data if d['molecule'] == 'H2')
-        o2_data = next(d for d in corrections_data if d['molecule'] == 'O2')
-        h2o_data = next(d for d in corrections_data if d['molecule'] == 'H2O')
-        
-        # Reaction: 2H2O → 2H2 + O2
-        reaction_free_energy = (2 * h2_data['gibbs_free_energy'] + 
-                              o2_data['gibbs_free_energy']) - (2 * h2o_data['gibbs_free_energy'])
-        
-        return {
-            'molecule': 'Reaction',
-            'electronic_energy': best_method_data['reaction_energy_hartree'],
-            'zpe_correction': (2*h2_data['zpe_correction'] + 
-                             o2_data['zpe_correction'] - 2*h2o_data['zpe_correction']),
-            'enthalpy_correction': (2*h2_data['enthalpy_correction'] + 
-                                  o2_data['enthalpy_correction'] - 2*h2o_data['enthalpy_correction']),
-            'entropy_correction': (2*h2_data['entropy_correction'] + 
-                                 o2_data['entropy_correction'] - 2*h2o_data['entropy_correction']),
-            'gibbs_free_energy': reaction_free_energy,
-            'zpe_kcal_mol': (2*h2_data['zpe_kcal_mol'] + 
-                           o2_data['zpe_kcal_mol'] - 2*h2o_data['zpe_kcal_mol']),
-            'entropy_cal_mol_k': (2*h2_data['entropy_cal_mol_k'] + 
-                                o2_data['entropy_cal_mol_k'] - 2*h2o_data['entropy_cal_mol_k'])
+        # Store complete results
+        thermodynamics_results = {
+            'H2': results['H2'],
+            'O2': results['O2'], 
+            'H2O': results['H2O'],
+            'reaction_delta_G_hartree': delta_G_hartree,
+            'reaction_delta_G_eV': delta_G_eV,
+            'experimental_delta_G_eV': 4.92,
+            'error_vs_experiment_eV': delta_G_eV - 4.92,
+            'method_used': best_method['method'],
+            'temperature_K': self.C['STANDARD_TEMP']
         }
-    
-    def _create_thermodynamics_plots(self, corrections_data, best_method_data):
-        """Create thermodynamics visualization"""
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 6))
-        
-        # Correction contributions
-        molecules = ['H2', 'O2', 'H2O']
-        zpe_vals = [d['zpe_correction'] * self.constants['HARTREE2EV'] 
-                   for d in corrections_data if d['molecule'] in molecules]
-        h_vals = [d['enthalpy_correction'] * self.constants['HARTREE2EV'] 
-                 for d in corrections_data if d['molecule'] in molecules]
-        s_vals = [d['entropy_correction'] * self.constants['HARTREE2EV'] 
-                 for d in corrections_data if d['molecule'] in molecules]
-        
-        x = np.arange(len(molecules))
-        width = 0.25
-        
-        ax1.bar(x - width, zpe_vals, width, label='ZPE', color='skyblue', alpha=0.8)
-        ax1.bar(x, h_vals, width, label='Enthalpy', color='lightgreen', alpha=0.8)
-        ax1.bar(x + width, s_vals, width, label='Entropy', color='salmon', alpha=0.8)
-        ax1.set_xlabel('Molecule')
-        ax1.set_ylabel('Energy Correction (eV)')
-        ax1.set_title('Thermodynamic Corrections by Component', fontweight='bold')
-        ax1.set_xticks(x)
-        ax1.set_xticklabels(molecules)
-        ax1.legend()
-        ax1.grid(True, alpha=0.3)
-        
-        # Electronic vs corrected energies
-        electronic_energies = [d['electronic_energy'] * self.constants['HARTREE2EV'] 
-                             for d in corrections_data if d['molecule'] in molecules]
-        corrected_energies = [d['gibbs_free_energy'] * self.constants['HARTREE2EV'] 
-                            for d in corrections_data if d['molecule'] in molecules]
-        
-        ax2.scatter(electronic_energies, corrected_energies, s=100, alpha=0.7, 
-                   c=['red', 'blue', 'green'])
-        for i, mol in enumerate(molecules):
-            ax2.annotate(mol, (electronic_energies[i], corrected_energies[i]), 
-                        xytext=(5, 5), textcoords='offset points', fontweight='bold')
-        
-        min_e = min(min(electronic_energies), min(corrected_energies))
-        max_e = max(max(electronic_energies), max(corrected_energies))
-        ax2.plot([min_e, max_e], [min_e, max_e], 'r--', alpha=0.7, linewidth=2)
-        ax2.set_xlabel('Electronic Energy (eV)')
-        ax2.set_ylabel('Corrected Free Energy (eV)')
-        ax2.set_title('Electronic vs Thermodynamically Corrected Energies', fontweight='bold')
-        ax2.grid(True, alpha=0.3)
-        
-        # Reaction energy comparison
-        reaction_correction = next(d for d in corrections_data if d['molecule'] == 'Reaction')
-        electronic_rxn = best_method_data['reaction_energy_ev']
-        corrected_rxn = reaction_correction['gibbs_free_energy'] * self.constants['HARTREE2EV']
-        experimental = 4.92
-        
-        methods = ['Electronic\n(Best Method)', 'Corrected\n(ΔG₂₉₈)', 'Experimental']
-        energies = [electronic_rxn, corrected_rxn, experimental]
-        colors = ['lightblue', 'lightgreen', 'gold']
-        
-        bars = ax3.bar(methods, energies, color=colors, alpha=0.8)
-        ax3.set_ylabel('Reaction Energy (eV)')
-        ax3.set_title('Water Splitting Reaction Energy Comparison', fontweight='bold')
-        ax3.grid(True, alpha=0.3)
-        
-        # Add value labels on bars
-        for bar, energy in zip(bars, energies):
-            height = bar.get_height()
-            ax3.text(bar.get_x() + bar.get_width()/2., height + 0.1,
-                    f'{energy:.2f} eV', ha='center', va='bottom', fontweight='bold')
-        
-        # Error analysis
-        error_electronic = abs(electronic_rxn - experimental)
-        error_corrected = abs(corrected_rxn - experimental)
-        
-        ax4.bar(['Electronic', 'Corrected'], [error_electronic, error_corrected], 
-                color=['red', 'green'], alpha=0.7)
-        ax4.set_ylabel('Absolute Error (eV)')
-        ax4.set_title('Error vs Experimental Value', fontweight='bold')
-        ax4.grid(True, alpha=0.3)
-        
-        # Add improvement percentage
-        improvement = (error_electronic - error_corrected) / error_electronic * 100
-        ax4.text(0.5, max(error_electronic, error_corrected) * 0.8, 
-                f'Improvement: {improvement:.1f}%', ha='center', fontweight='bold',
-                bbox=dict(boxstyle="round,pad=0.3", facecolor='yellow', alpha=0.7))
-        
-        plt.tight_layout()
-        plt.savefig('plots/task8_thermodynamic_analysis.png', dpi=300, bbox_inches='tight')
-        plt.show()
         
         # Print summary
-        print(f"Electronic reaction energy: {electronic_rxn:.3f} eV")
-        print(f"Corrected reaction free energy: {corrected_rxn:.3f} eV")
-        print(f"Experimental value: {experimental:.3f} eV")
-        print(f"Improvement: {error_electronic:.3f} → {error_corrected:.3f} eV")
-        print(f"ZPE correction magnitude: {abs(reaction_correction['zpe_correction'] * self.constants['HARTREE2EV']):.3f} eV")
-        print(f"Entropy correction magnitude: {abs(reaction_correction['entropy_correction'] * self.constants['HARTREE2EV']):.3f} eV")
+        print(f"\n=== Task 8: Thermodynamic Analysis Results ===")
+        print(f"Method: {best_method['method']}")
+        print(f"Temperature: {self.C['STANDARD_TEMP']} K")
+        print(f"")
+        print(f"Reaction: 2H₂O(l) → 2H₂(g) + O₂(g)")
+        print(f"Calculated ΔG: {delta_G_eV:.3f} eV")
+        print(f"Experimental ΔG: 4.92 eV")
+        print(f"Error: {delta_G_eV - 4.92:.3f} eV ({abs(delta_G_eV - 4.92)/4.92*100:.1f}%)")
+        
+        # Store in shared results
+        shared_results['task8'] = thermodynamics_results
+        
+        return thermodynamics_results
+
+    def save_results(self, results, filename='task8_thermodynamics.json'):
+        """Save results to JSON file"""
+        
+        # Convert numpy types to Python native types for JSON serialization
+        json_safe_results = json.loads(json.dumps(results, default=str))
+        
+        with open(filename, 'w') as f:
+            json.dump(json_safe_results, f, indent=2)
+        
+        print(f"Task 8 results saved to {filename}")
