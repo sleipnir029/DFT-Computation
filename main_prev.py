@@ -3,18 +3,18 @@ Main script to run all DFT water splitting analysis tasks - CORRECTED VERSION
 """
 
 import sys
-from task1_coordinates import get_experimental_coordinates
-from task2_geometry_optimization import run_geometry_optimization
-from task3_reaction_energy import run_reaction_energy_calculation
-from task4_scf_energy import run_scf_energy_recording
-from task5_basis_convergence import calculate_reaction_energy_basis_series
-from task6_convergence_comparison import analyze_convergence_behavior
-from task7_method_ladder import run_method_ladder
-from task8_thermodynamics import calculate_thermodynamic_corrections  # CORRECTED
-from task9_accuracy_analysis import create_accuracy_analysis  # CORRECTED
+from modules.task1_coordinates import get_experimental_coordinates
+from modules.task2_geometry_optimization import run_geometry_optimization
+from modules.task3_reaction_energy import run_reaction_energy_calculation
+from modules.task4_scf_energy import run_scf_energy_recording
+from modules.task5_basis_convergence import calculate_reaction_energy_basis_series
+from modules.task6_convergence_comparison import analyze_convergence_behavior
+from modules.task7_method_ladder import run_method_ladder
+from modules.task8_thermodynamics import calculate_thermodynamic_corrections  # CORRECTED
+from modules.task9_accuracy_analysis import create_accuracy_analysis  # CORRECTED
 from plotting_prev import plot_basis_convergence, plot_method_comparison_corrected, plot_thermodynamic_breakdown_corrected, plot_accuracy_comparison_before_after
 from constants import EXPERIMENTAL_WATER_SPLITTING_DG
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def main():
     """Run complete DFT water splitting analysis with CORRECTED thermodynamics"""
