@@ -4,9 +4,9 @@ Task T6: Compare single-molecule vs reaction energy convergence
 
 import numpy as np
 import pandas as pd
-from constants import BASIS_SETS, HARTREE2EV
+from config.constants import BASIS_SETS, HARTREE2EV
 from task5_basis_convergence import calculate_reaction_energy_basis_series
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def analyze_convergence_behavior():
     """Analyze convergence of H2O energy vs reaction energy"""

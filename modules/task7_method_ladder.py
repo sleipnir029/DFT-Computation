@@ -5,10 +5,10 @@ HF -> MP2 -> CCSD and PBE -> PBE0
 
 import pandas as pd
 from pyscf import gto, scf, mp, cc, dft
-from constants import HARTREE2EV, EXPERIMENTAL_WATER_SPLITTING_DG
+from config.constants import HARTREE2EV, EXPERIMENTAL_WATER_SPLITTING_DG
 from task1_coordinates import get_experimental_coordinates
 from task2_geometry_optimization import build_molecule
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def calculate_with_method(mol, method):
     """Calculate energy with specified method"""

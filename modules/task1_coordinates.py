@@ -3,8 +3,8 @@ Task T1: Define experimental coordinates for H2, O2, and H2O
 """
 
 import pandas as pd
-from constants import EXPERIMENTAL_GEOMETRIES
-from data_manager import data_manager
+from config.constants import EXPERIMENTAL_GEOMETRIES
+from utils.data_manager import data_manager
 
 def get_experimental_coordinates():
     """

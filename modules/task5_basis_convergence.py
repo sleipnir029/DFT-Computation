@@ -4,9 +4,9 @@ Task T5: Basis set convergence study
 
 import numpy as np
 import pandas as pd
-from constants import BASIS_SETS, HARTREE2EV
+from config.constants import BASIS_SETS, HARTREE2EV
 from task4_scf_energy import calculate_scf_energies
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def calculate_reaction_energy_basis_series():
     """Calculate reaction energies across basis set series"""

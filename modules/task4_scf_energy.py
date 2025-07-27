@@ -6,8 +6,8 @@ import pandas as pd
 from pyscf import gto, scf
 from task1_coordinates import get_experimental_coordinates
 from task2_geometry_optimization import build_molecule
-from data_manager import data_manager
-from constants import HARTREE2EV
+from utils.data_manager import data_manager
+from config.constants import HARTREE2EV
 
 def calculate_scf_energies(basis='STO-3G'):
     """Calculate SCF energies for all molecules with given basis"""

@@ -3,9 +3,9 @@ Task T3: Calculate reaction energy for water splitting: 2H2O -> 2H2 + O2
 """
 
 import pandas as pd
-from constants import HARTREE2EV
+from config.constants import HARTREE2EV
 from task2_geometry_optimization import run_geometry_optimization
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def calculate_reaction_energy(energies):
     """

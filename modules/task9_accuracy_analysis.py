@@ -5,10 +5,10 @@ CORRECTED VERSION - Uses fixed thermodynamic corrections
 
 import numpy as np
 import pandas as pd
-from constants import EXPERIMENTAL_WATER_SPLITTING_DG
+from config.constants import EXPERIMENTAL_WATER_SPLITTING_DG
 from task8_thermodynamics import calculate_thermodynamic_corrections
 from task7_method_ladder import run_method_ladder
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def create_accuracy_analysis():
     """Create comprehensive accuracy analysis with CORRECTED thermodynamics"""

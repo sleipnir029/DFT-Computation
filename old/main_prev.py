@@ -13,7 +13,7 @@ from modules.task7_method_ladder import run_method_ladder
 from modules.task8_thermodynamics import calculate_thermodynamic_corrections  # CORRECTED
 from modules.task9_accuracy_analysis import create_accuracy_analysis  # CORRECTED
 from plotting_prev import plot_basis_convergence, plot_method_comparison_corrected, plot_thermodynamic_breakdown_corrected, plot_accuracy_comparison_before_after
-from constants import EXPERIMENTAL_WATER_SPLITTING_DG
+from config.constants import EXPERIMENTAL_WATER_SPLITTING_DG
 from utils.data_manager import data_manager
 
 def main():

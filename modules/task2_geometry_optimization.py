@@ -20,9 +20,9 @@ except (ModuleNotFoundError, ImportError):
         optimize = None
         opt_name = "None"
 
-from constants import EXPERIMENTAL_GEOMETRIES, EXPERIMENTAL_BOND_LENGTHS, EXPERIMENTAL_BOND_ANGLES
+from config.constants import EXPERIMENTAL_GEOMETRIES, EXPERIMENTAL_BOND_LENGTHS, EXPERIMENTAL_BOND_ANGLES
 from task1_coordinates import get_experimental_coordinates
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def build_molecule(molecule_name, coords_data, basis='STO-3G'):
     """Build PySCF molecule object"""

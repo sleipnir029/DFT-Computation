@@ -4,10 +4,10 @@ CORRECTED VERSION - Fixed entropy data and unit conversions
 """
 
 import pandas as pd
-from constants import (NIST_THERMO_DATA, KCAL2HARTREE, R_GAS, STANDARD_TEMP, 
+from config.constants import (NIST_THERMO_DATA, KCAL2HARTREE, R_GAS, STANDARD_TEMP, 
                       HARTREE2EV, EXPERIMENTAL_WATER_SPLITTING_DG, HARTREE2KCAL)
 from task7_method_ladder import run_method_ladder
-from data_manager import data_manager
+from utils.data_manager import data_manager
 
 def calculate_thermodynamic_corrections():
     """Add NIST thermodynamic corrections to electronic energies - FIXED VERSION"""
