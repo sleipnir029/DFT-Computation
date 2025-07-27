@@ -16,10 +16,10 @@ from modules.task8_thermodynamics import calculate_thermodynamic_corrections
 from modules.task9_accuracy_analysis import create_accuracy_analysis
 
 # Updated plotting import - uses new scientific plotting module
-from plotting import generate_all_plots
+from utils.plotting import generate_all_plots
 
-from constants import EXPERIMENTAL_WATER_SPLITTING_DG
-from data_manager import data_manager
+from config.constants import EXPERIMENTAL_WATER_SPLITTING_DG
+from utils.data_manager import data_manager
 
 def main():
     """Run complete DFT water splitting analysis with professional scientific plots"""
