@@ -1,167 +1,142 @@
+"""
+Task 9: Method accuracy analysis with corrected thermodynamics
+Analyzes performance of different quantum chemistry methods
+"""
+
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 import json
+from constants import CONSTANTS
 
 class Task9AccuracyAnalysis:
-    def __init__(self, constants):
-        self.constants = constants
+    """
+    Analyze accuracy of different computational methods
+    Uses corrected thermodynamic data from Task 8
+    """
     
+    def __init__(self, constants_dict=None):
+        self.C = constants_dict or CONSTANTS
+        
     def run(self, shared_results):
-        """T9: Comprehensive accuracy analysis"""
-        print("Task 9: Accuracy analysis")
+        """
+        Analyze method accuracy against experimental values
         
-        if 'task8' not in shared_results or 'task7' not in shared_results:
-            print("Error: Tasks 7 and 8 must be completed first")
-            return None
-        
-        experimental_dg = 4.92  # eV
-        
-        # Get thermodynamic corrections
-        thermo_corrections = shared_results['task8']
-        reaction_correction = next(d for d in thermo_corrections if d['molecule'] == 'Reaction')
-        
-        # Analyze all methods
-        analysis_data = []
-        
-        for method_data in shared_results['task7']:
-            method = method_data['method']
-            electronic_energy = method_data['reaction_energy_ev']
+        Args:
+            shared_results: Dictionary containing all previous task results
             
-            # Apply proper thermodynamic corrections
-            zpe_corr = reaction_correction['zpe_correction'] * self.constants['HARTREE2EV']
-            h_corr = reaction_correction['enthalpy_correction'] * self.constants['HARTREE2EV']
-            s_corr = reaction_correction['entropy_correction'] * self.constants['HARTREE2EV']
+        Returns:
+            Dictionary with accuracy analysis results
+        """
+        
+        if 'task7' not in shared_results or 'task8' not in shared_results:
+            raise RuntimeError("Tasks 7 and 8 must be completed before Task 9")
+        
+        task7_results = shared_results['task7']
+        task8_results = shared_results['task8']
+        
+        # Experimental reference values
+        experimental_values = {
+            'reaction_delta_G_eV': 4.92,  # eV, water splitting reaction
+            'H2O_bond_length': 0.958,     # Å, O-H bond length
+            'H2O_bond_angle': 104.5,      # degrees, H-O-H angle
+            'H2_bond_length': 0.741,      # Å, H-H bond length
+        }
+        
+        # Analyze each method's performance
+        method_analysis = []
+        
+        for result in task7_results:
+            method = result['method']
             
-            corrected_energy = electronic_energy + zpe_corr + h_corr + s_corr
-            deviation = abs(corrected_energy - experimental_dg)
+            # Get thermodynamic analysis for this method
+            # For simplicity, scale Task 8 results by energy differences
+            base_delta_G = task8_results['reaction_delta_G_eV']
             
-            analysis_data.append({
+            # Calculate relative electronic energy differences
+            electronic_energy_diff = (
+                2 * result['h2_energy'] + result['o2_energy'] - 2 * result['h2o_energy']
+            ) * self.C['HARTREE2EV']
+            
+            # Approximate method-specific thermodynamic correction
+            # (In practice, would need full calculation for each method)
+            estimated_delta_G = base_delta_G + (electronic_energy_diff - 
+                                               (2 * task8_results['H2']['E_electronic'] + 
+                                                task8_results['O2']['E_electronic'] - 
+                                                2 * task8_results['H2O']['E_electronic']) * 
+                                               self.C['HARTREE2EV'])
+            
+            # Calculate errors
+            delta_G_error = estimated_delta_G - experimental_values['reaction_delta_G_eV']
+            delta_G_percent_error = abs(delta_G_error) / experimental_values['reaction_delta_G_eV'] * 100
+            
+            analysis = {
                 'method': method,
-                'method_type': method_data['method_type'],
-                'electronic_energy': electronic_energy,
-                'zpe_correction': zpe_corr,
-                'enthalpy_correction': h_corr,
-                'entropy_correction': s_corr,
-                'corrected_energy': corrected_energy,
-                'experimental': experimental_dg,
-                'deviation': deviation,
-                'percent_error': (deviation / experimental_dg) * 100
-            })
+                'electronic_delta_E_eV': electronic_energy_diff,
+                'estimated_delta_G_eV': estimated_delta_G,
+                'delta_G_error_eV': delta_G_error,
+                'delta_G_percent_error': delta_G_percent_error,
+                'abs_delta_G_error_eV': abs(delta_G_error)
+            }
+            
+            # Add geometry errors if available
+            if 'geometries' in result:
+                geom = result['geometries']
+                if 'H2O' in geom:
+                    h2o_geom = geom['H2O']
+                    if 'bond_length' in h2o_geom:
+                        bond_length_error = h2o_geom['bond_length'] - experimental_values['H2O_bond_length']
+                        analysis['H2O_bond_length_error_angstrom'] = bond_length_error
+                    if 'bond_angle' in h2o_geom:
+                        bond_angle_error = h2o_geom['bond_angle'] - experimental_values['H2O_bond_angle']
+                        analysis['H2O_bond_angle_error_degrees'] = bond_angle_error
+            
+            method_analysis.append(analysis)
         
-        # Enhanced visualization
-        self._create_accuracy_plots(analysis_data, experimental_dg)
+        # Sort by accuracy (smallest absolute error first)
+        method_analysis.sort(key=lambda x: x['abs_delta_G_error_eV'])
         
-        # Print summary
-        self._print_accuracy_summary(analysis_data, experimental_dg)
+        # Calculate summary statistics
+        errors = [abs(m['delta_G_error_eV']) for m in method_analysis]
+        summary_stats = {
+            'best_method': method_analysis[0]['method'],
+            'best_method_error_eV': method_analysis[0]['delta_G_error_eV'],
+            'worst_method': method_analysis[-1]['method'],
+            'worst_method_error_eV': method_analysis[-1]['delta_G_error_eV'],
+            'mean_absolute_error_eV': np.mean(errors),
+            'std_error_eV': np.std(errors),
+            'methods_within_chemical_accuracy': sum(1 for e in errors if e < 0.1),  # < 0.1 eV
+            'chemical_accuracy_percentage': sum(1 for e in errors if e < 0.1) / len(errors) * 100
+        }
         
-        # Save data
-        analysis_df = pd.DataFrame(analysis_data)
-        analysis_df.to_csv('csv/task9_accuracy_analysis.csv', index=False)
-
-        with open('json/task9_accuracy_analysis.json', 'w') as f:
-            json.dump(analysis_data, f, indent=2)
+        # Compile final results
+        accuracy_results = {
+            'method_rankings': method_analysis,
+            'summary_statistics': summary_stats,
+            'experimental_references': experimental_values,
+            'analysis_temperature_K': self.C['STANDARD_TEMP']
+        }
         
-        print("Task 9 completed successfully!")
-        return analysis_data
+        # Print results summary
+        print(f"\n=== Task 9: Method Accuracy Analysis ===")
+        print(f"Best method: {summary_stats['best_method']} "
+              f"(error: {summary_stats['best_method_error_eV']:+.3f} eV)")
+        print(f"Mean absolute error: {summary_stats['mean_absolute_error_eV']:.3f} eV")
+        print(f"Methods within chemical accuracy (±0.1 eV): "
+              f"{summary_stats['methods_within_chemical_accuracy']}/{len(method_analysis)} "
+              f"({summary_stats['chemical_accuracy_percentage']:.0f}%)")
+        
+        print(f"\nMethod ranking by ΔG accuracy:")
+        for i, method in enumerate(method_analysis[:5], 1):  # Top 5
+            print(f"{i}. {method['method']}: {method['delta_G_error_eV']:+.3f} eV")
+        
+        shared_results['task9'] = accuracy_results
+        return accuracy_results
     
-    def _create_accuracy_plots(self, analysis_data, experimental_dg):
-        """Create comprehensive accuracy visualization"""
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 6))
+    def save_results(self, results, filename='task9_accuracy_analysis.json'):
+        """Save results to JSON file"""
         
-        methods = [d['method'] for d in analysis_data]
-        electronic_energies = [d['electronic_energy'] for d in analysis_data]
-        corrected_energies = [d['corrected_energy'] for d in analysis_data]
-        deviations = [d['deviation'] for d in analysis_data]
+        json_safe_results = json.loads(json.dumps(results, default=str))
         
-        # Method comparison with corrections
-        x = np.arange(len(methods))
-        width = 0.35
+        with open(filename, 'w') as f:
+            json.dump(json_safe_results, f, indent=2)
         
-        bars1 = ax1.bar(x - width/2, electronic_energies, width, label='Electronic', alpha=0.7)
-        bars2 = ax1.bar(x + width/2, corrected_energies, width, label='Corrected', alpha=0.7)
-        ax1.axhline(y=experimental_dg, color='red', linestyle='--', linewidth=2, 
-                   label=f'Experimental ({experimental_dg} eV)')
-        ax1.set_xlabel('Method')
-        ax1.set_ylabel('Reaction Energy (eV)')
-        ax1.set_title('Electronic vs Corrected Reaction Energies', fontweight='bold')
-        ax1.set_xticks(x)
-        ax1.set_xticklabels(methods)
-        ax1.legend()
-        ax1.grid(True, alpha=0.3)
-        
-        # Deviation from experimental
-        colors = ['red' if d['method_type'] == 'wavefunction' else 'blue' for d in analysis_data]
-        bars = ax2.bar(methods, deviations, color=colors, alpha=0.7)
-        ax2.set_xlabel('Method')
-        ax2.set_ylabel('Deviation from Experiment (eV)')
-        ax2.set_title('Accuracy Analysis: Deviation from Experimental Value', fontweight='bold')
-        ax2.grid(True, alpha=0.3)
-        
-        # Add deviation values on bars
-        for bar, deviation in zip(bars, deviations):
-            height = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width()/2., height + 0.05,
-                    f'{deviation:.2f}', ha='center', va='bottom', fontweight='bold')
-        
-        # Thermodynamic corrections breakdown
-        corrections = ['ZPE', 'Enthalpy', 'Entropy']
-        avg_corrections = [
-            np.mean([d['zpe_correction'] for d in analysis_data]),
-            np.mean([d['enthalpy_correction'] for d in analysis_data]),
-            np.mean([d['entropy_correction'] for d in analysis_data])
-        ]
-        
-        ax3.bar(corrections, avg_corrections, color=['skyblue', 'lightgreen', 'salmon'], alpha=0.7)
-        ax3.set_ylabel('Average Correction (eV)')
-        ax3.set_title('Thermodynamic Corrections Breakdown', fontweight='bold')
-        ax3.grid(True, alpha=0.3)
-        
-        # Add correction values on bars
-        for i, (corr, val) in enumerate(zip(corrections, avg_corrections)):
-            ax3.text(i, val + (0.01 if val > 0 else -0.01), f'{val:.3f}', 
-                    ha='center', va='bottom' if val > 0 else 'top', fontweight='bold')
-        
-        # Method performance ranking
-        sorted_data = sorted(analysis_data, key=lambda x: x['deviation'])
-        sorted_methods = [d['method'] for d in sorted_data]
-        sorted_deviations = [d['deviation'] for d in sorted_data]
-        sorted_colors = ['red' if d['method_type'] == 'wavefunction' else 'blue' for d in sorted_data]
-        
-        ax4.barh(sorted_methods, sorted_deviations, color=sorted_colors, alpha=0.7)
-        ax4.set_xlabel('Deviation from Experiment (eV)')
-        ax4.set_ylabel('Method (Ranked by Accuracy)')
-        ax4.set_title('Method Performance Ranking', fontweight='bold')
-        ax4.grid(True, alpha=0.3)
-        
-        # Add "Best" and "Worst" labels
-        if len(sorted_methods) > 1:
-            ax4.text(sorted_deviations[0] + 0.1, 0, 'Best', va='center', fontweight='bold', color='green')
-            ax4.text(sorted_deviations[-1] + 0.1, len(sorted_methods)-1, 'Worst', va='center', fontweight='bold', color='red')
-        
-        plt.tight_layout()
-        plt.savefig('plots/task9_accuracy_analysis.png', dpi=300, bbox_inches='tight')
-        plt.show()
-    
-    def _print_accuracy_summary(self, analysis_data, experimental_dg):
-        """Print detailed accuracy summary"""
-        sorted_data = sorted(analysis_data, key=lambda x: x['deviation'])
-        avg_corrections = [
-            np.mean([d['zpe_correction'] for d in analysis_data]),
-            np.mean([d['enthalpy_correction'] for d in analysis_data]),
-            np.mean([d['entropy_correction'] for d in analysis_data])
-        ]
-        
-        print("\n" + "="*50)
-        print("ACCURACY ANALYSIS SUMMARY")
-        print("="*50)
-        print(f"Experimental value: {experimental_dg:.2f} eV")
-        print(f"Best method: {sorted_data[0]['method']} (deviation: {sorted_data[0]['deviation']:.3f} eV)")
-        print(f"Worst method: {sorted_data[-1]['method']} (deviation: {sorted_data[-1]['deviation']:.3f} eV)")
-        print(f"Average ZPE correction: {avg_corrections[0]:.3f} eV")
-        print(f"Average enthalpy correction: {avg_corrections[1]:.3f} eV")
-        print(f"Average entropy correction: {avg_corrections[2]:.3f} eV")
-        print("\nMethod Ranking (by accuracy):")
-        for i, data in enumerate(sorted_data, 1):
-            print(f"{i}. {data['method']}: {data['deviation']:.3f} eV deviation")
-        print("="*50)
+        print(f"Task 9 results saved to {filename}")
