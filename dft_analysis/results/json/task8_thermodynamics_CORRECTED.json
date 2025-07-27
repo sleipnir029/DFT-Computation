@@ -1,0 +1,47 @@
+{
+  "task": "task8_thermodynamics_CORRECTED",
+  "timestamp": "2025-07-27T19:54:46.838125",
+  "data": {
+    "electronic_results": {
+      "energies": {
+        "H2": -1.1550916256898835,
+        "O2": -149.976462717664,
+        "H2O": -76.23070957487265
+      },
+      "reaction_energy_ev": 4.755820525509727,
+      "error_vs_exp": -0.1641794744902727
+    },
+    "corrected_energies": {
+      "H2": {
+        "electronic": -1.1550916256898835,
+        "zpe": 0.009875546000720164,
+        "thermal": 0.0032254486211808317,
+        "entropy": -0.014839931072943733,
+        "total_g": -1.156830562140926
+      },
+      "O2": {
+        "electronic": -149.976462717664,
+        "zpe": 0.001574477884252303,
+        "thermal": 0.0032254486211808317,
+        "entropy": -0.023296920259232877,
+        "total_g": -149.9949597114178
+      },
+      "H2O": {
+        "electronic": -76.23070957487265,
+        "zpe": 0.021410030743855966,
+        "thermal": 0.003773647398693779,
+        "entropy": -0.007943473971169377,
+        "total_g": -76.21346937070128
+      }
+    },
+    "reaction_delta_g_ev": 3.2195942318978656,
+    "error_vs_experimental": -1.7004057681021343,
+    "performance_rating": "FAIR",
+    "corrections_applied": [
+      "Fixed NIST entropy values",
+      "Corrected unit conversions",
+      "Proper liquid water entropy",
+      "Eliminated conversion errors"
+    ]
+  }
+}

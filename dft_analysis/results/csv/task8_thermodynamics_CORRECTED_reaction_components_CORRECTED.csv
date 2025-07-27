@@ -1,0 +1,5 @@
+Component,Value_eV,Description
+Electronic_ΔE,4.755820525509727,Pure electronic reaction energy
+Thermodynamic_ΔG_CORRECTED,3.2195942318978656,"Including ZPE, thermal, and CORRECTED entropy"
+Experimental_ΔG,4.92,Literature reference value
+Error_CORRECTED,-1.7004057681021343,Calculated - Experimental (FIXED)

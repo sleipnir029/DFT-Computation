@@ -1,0 +1,8 @@
+Molecule,Atom_Index,Atom_Type,X_Angstrom,Y_Angstrom,Z_Angstrom,Charge,Spin,Reference
+H2,1,H,0.0,0.0,0.0,0,0,NIST Chemistry WebBook
+H2,2,H,0.741,0.0,0.0,0,0,NIST Chemistry WebBook
+O2,1,O,0.0,0.0,0.0,0,2,NIST Chemistry WebBook
+O2,2,O,1.208,0.0,0.0,0,2,NIST Chemistry WebBook
+H2O,1,O,0.0,0.0,0.117,0,0,NIST Chemistry WebBook
+H2O,2,H,0.0,0.757,-0.467,0,0,NIST Chemistry WebBook
+H2O,3,H,0.0,-0.757,-0.467,0,0,NIST Chemistry WebBook

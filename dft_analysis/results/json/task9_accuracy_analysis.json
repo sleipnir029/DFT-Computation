@@ -1,0 +1,58 @@
+{
+  "task": "task9_accuracy_analysis",
+  "timestamp": "2025-07-27T15:24:50.757568",
+  "data": {
+    "analysis_data": [
+      {
+        "method": "MP2",
+        "electronic_energy": 4.755820525509727,
+        "thermo_energy": -117.10142449831491,
+        "error": -122.02142449831491,
+        "abs_error": 122.02142449831491,
+        "performance": "Fair"
+      },
+      {
+        "method": "CCSD",
+        "electronic_energy": 4.726865715174295,
+        "thermo_energy": -117.13037930865035,
+        "error": -122.05037930865035,
+        "abs_error": 122.05037930865035,
+        "performance": "Fair"
+      },
+      {
+        "method": "PBE0",
+        "electronic_energy": 4.601687216664562,
+        "thermo_energy": -117.25555780716009,
+        "error": -122.17555780716009,
+        "abs_error": 122.17555780716009,
+        "performance": "Fair"
+      },
+      {
+        "method": "HF",
+        "electronic_energy": 4.587762504572323,
+        "thermo_energy": -117.26948251925232,
+        "error": -122.18948251925232,
+        "abs_error": 122.18948251925232,
+        "performance": "Fair"
+      },
+      {
+        "method": "PBE",
+        "electronic_energy": 4.178528306780152,
+        "thermo_energy": -117.6787167170445,
+        "error": -122.5987167170445,
+        "abs_error": 122.5987167170445,
+        "performance": "Fair"
+      }
+    ],
+    "best_method": {
+      "method": "MP2",
+      "electronic_energy": 4.755820525509727,
+      "thermo_energy": -117.10142449831491,
+      "error": -122.02142449831491,
+      "abs_error": 122.02142449831491,
+      "performance": "Fair"
+    },
+    "chemical_accurate_count": 0,
+    "excellent_accurate_count": 0
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "task": "task3_reaction_energy",
+  "timestamp": "2025-07-27T19:53:22.599068",
+  "data": {
+    "energies": {
+      "H2": -1.1167061372361047,
+      "O2": -147.63396960849636,
+      "H2O": -74.96270660885386
+    },
+    "reaction_energy_ev": 1.579113063957374,
+    "optimization_results": {
+      "H2": {
+        "energy": -1.1167061372361047,
+        "properties": {
+          "bond_length": 0.7122339802276151
+        },
+        "comparisons": {
+          "bond_length": {
+            "experimental": 0.741,
+            "calculated": 0.7122339802276151,
+            "error": -0.02876601977238491,
+            "percent_error": 3.8820539503893268
+          }
+        }
+      },
+      "O2": {
+        "energy": -147.63396960849636,
+        "properties": {
+          "bond_length": 1.2171826027367576
+        },
+        "comparisons": {
+          "bond_length": {
+            "experimental": 1.208,
+            "calculated": 1.2171826027367576,
+            "error": 0.009182602736757639,
+            "percent_error": 0.7601492331753013
+          }
+        }
+      },
+      "H2O": {
+        "energy": -74.96270660885386,
+        "properties": {
+          "oh1_length": 0.9893950265382465,
+          "oh2_length": 0.9893950265382462,
+          "oh_avg_length": 0.9893950265382463,
+          "hoh_angle": 100.02626360523564
+        },
+        "comparisons": {
+          "oh_bond_length": {
+            "experimental": 0.958,
+            "calculated": 0.9893950265382463,
+            "error": 0.03139502653824633,
+            "percent_error": 3.27714264491089
+          },
+          "hoh_angle": {
+            "experimental": 104.5,
+            "calculated": 100.02626360523564,
+            "error": -4.473736394764359,
+            "percent_error": 4.28108745910465
+          }
+        }
+      }
+    }
+  }
+}

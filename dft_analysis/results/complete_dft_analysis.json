@@ -1,0 +1,464 @@
+{
+  "analysis_metadata": {
+    "timestamp": "2025-07-27T19:54:46.839890",
+    "version": "1.0",
+    "description": "Complete DFT Water Splitting Analysis"
+  },
+  "results": {
+    "T1": {
+      "H2": {
+        "atoms": [
+          "H",
+          "H"
+        ],
+        "coordinates": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.741,
+            0.0,
+            0.0
+          ]
+        ],
+        "charge": 0,
+        "spin": 0
+      },
+      "O2": {
+        "atoms": [
+          "O",
+          "O"
+        ],
+        "coordinates": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.208,
+            0.0,
+            0.0
+          ]
+        ],
+        "charge": 0,
+        "spin": 2
+      },
+      "H2O": {
+        "atoms": [
+          "O",
+          "H",
+          "H"
+        ],
+        "coordinates": [
+          [
+            0.0,
+            0.0,
+            0.117
+          ],
+          [
+            0.0,
+            0.757,
+            -0.467
+          ],
+          [
+            0.0,
+            -0.757,
+            -0.467
+          ]
+        ],
+        "charge": 0,
+        "spin": 0
+      }
+    },
+    "T2": {
+      "H2": {
+        "energy": -1.1167061372361047,
+        "properties": {
+          "bond_length": 0.7122339802276151
+        },
+        "comparisons": {
+          "bond_length": {
+            "experimental": 0.741,
+            "calculated": 0.7122339802276151,
+            "error": -0.02876601977238491,
+            "percent_error": 3.8820539503893268
+          }
+        }
+      },
+      "O2": {
+        "energy": -147.63396960849636,
+        "properties": {
+          "bond_length": 1.2171826027367576
+        },
+        "comparisons": {
+          "bond_length": {
+            "experimental": 1.208,
+            "calculated": 1.2171826027367576,
+            "error": 0.009182602736757639,
+            "percent_error": 0.7601492331753013
+          }
+        }
+      },
+      "H2O": {
+        "energy": -74.96270660885386,
+        "properties": {
+          "oh1_length": 0.9893950265382465,
+          "oh2_length": 0.9893950265382462,
+          "oh_avg_length": 0.9893950265382463,
+          "hoh_angle": 100.02626360523564
+        },
+        "comparisons": {
+          "oh_bond_length": {
+            "experimental": 0.958,
+            "calculated": 0.9893950265382463,
+            "error": 0.03139502653824633,
+            "percent_error": 3.27714264491089
+          },
+          "hoh_angle": {
+            "experimental": 104.5,
+            "calculated": 100.02626360523564,
+            "error": -4.473736394764359,
+            "percent_error": 4.28108745910465
+          }
+        }
+      }
+    },
+    "T3": {
+      "energies": {
+        "H2": -1.1167061372361047,
+        "O2": -147.63396960849636,
+        "H2O": -74.96270660885386
+      },
+      "reaction_energy_ev": 1.579113063957374,
+      "optimization_results": {
+        "H2": {
+          "energy": -1.1167061372361047,
+          "properties": {
+            "bond_length": 0.7122339802276151
+          },
+          "comparisons": {
+            "bond_length": {
+              "experimental": 0.741,
+              "calculated": 0.7122339802276151,
+              "error": -0.02876601977238491,
+              "percent_error": 3.8820539503893268
+            }
+          }
+        },
+        "O2": {
+          "energy": -147.63396960849636,
+          "properties": {
+            "bond_length": 1.2171826027367576
+          },
+          "comparisons": {
+            "bond_length": {
+              "experimental": 1.208,
+              "calculated": 1.2171826027367576,
+              "error": 0.009182602736757639,
+              "percent_error": 0.7601492331753013
+            }
+          }
+        },
+        "H2O": {
+          "energy": -74.96270660885386,
+          "properties": {
+            "oh1_length": 0.9893950265382465,
+            "oh2_length": 0.9893950265382462,
+            "oh_avg_length": 0.9893950265382463,
+            "hoh_angle": 100.02626360523564
+          },
+          "comparisons": {
+            "oh_bond_length": {
+              "experimental": 0.958,
+              "calculated": 0.9893950265382463,
+              "error": 0.03139502653824633,
+              "percent_error": 3.27714264491089
+            },
+            "hoh_angle": {
+              "experimental": 104.5,
+              "calculated": 100.02626360523564,
+              "error": -4.473736394764359,
+              "percent_error": 4.28108745910465
+            }
+          }
+        }
+      }
+    },
+    "T4": {
+      "H2": -1.1167061372361047,
+      "O2": -147.63396960849636,
+      "H2O": -74.96270660885386
+    },
+    "T5": {
+      "STO-3G": {
+        "energies": {
+          "H2": -1.1167061372361047,
+          "O2": -147.63396960849636,
+          "H2O": -74.96270660885386
+        },
+        "reaction_energy_hartree": 0.05803133473915523,
+        "reaction_energy_ev": 1.579113063957374
+      },
+      "3-21G": {
+        "energies": {
+          "H2": -1.122932020797323,
+          "O2": -148.7676002037464,
+          "H2O": -75.58537790808646
+        },
+        "reaction_energy_hartree": 0.15729157083185896,
+        "reaction_energy_ev": 4.280121687143894
+      },
+      "6-31G": {
+        "energies": {
+          "H2": -1.1267403411606467,
+          "O2": -149.54555367096188,
+          "H2O": -75.98407765332502
+        },
+        "reaction_energy_hartree": 0.16912095336687116,
+        "reaction_energy_ev": 4.602015584355656
+      },
+      "cc-pVDZ": {
+        "energies": {
+          "H2": -1.1287110109153242,
+          "O2": -149.6276689906853,
+          "H2O": -76.02684408743093
+        },
+        "reaction_energy_hartree": 0.16859716234591815,
+        "reaction_energy_ev": 4.587762504572323
+      },
+      "cc-pVTZ": {
+        "energies": {
+          "H2": -1.132959138815667,
+          "O2": -149.67508155300263,
+          "H2O": -76.05724852038225
+        },
+        "reaction_energy_hartree": 0.17349721013053454,
+        "reaction_energy_ev": 4.721099597463318
+      },
+      "cc-pVQZ": {
+        "energies": {
+          "H2": -1.1334575087220489,
+          "O2": -149.68731323763362,
+          "H2O": -76.06492135219261
+        },
+        "reaction_energy_hartree": 0.1756144493075169,
+        "reaction_energy_ev": 4.778712610483322
+      },
+      "cc-pV5Z": {
+        "energies": {
+          "H2": -1.1336066261669135,
+          "O2": -149.69049644188587,
+          "H2O": -76.0671778457448
+        },
+        "reaction_energy_hartree": 0.17664599726990105,
+        "reaction_energy_ev": 4.806782460519019
+      }
+    },
+    "T6": {
+      "basis_sets": [
+        "STO-3G",
+        "3-21G",
+        "6-31G",
+        "cc-pVDZ",
+        "cc-pVTZ",
+        "cc-pVQZ",
+        "cc-pV5Z"
+      ],
+      "h2o_energies": [
+        -74.96270660885386,
+        -75.58537790808646,
+        -75.98407765332502,
+        -76.02684408743093,
+        -76.05724852038225,
+        -76.06492135219261,
+        -76.0671778457448
+      ],
+      "reaction_energies": [
+        1.579113063957374,
+        4.280121687143894,
+        4.602015584355656,
+        4.587762504572323,
+        4.721099597463318,
+        4.778712610483322,
+        4.806782460519019
+      ],
+      "h2o_convergence": [
+        30.05419342462321,
+        13.110444196913955,
+        2.261271433050499,
+        1.0975374762308736,
+        0.2701907076024051,
+        0.06140231760998907,
+        0.0
+      ],
+      "reaction_convergence": [
+        -3.2276693965616445,
+        -0.5266607733751245,
+        -0.20476687616336253,
+        -0.21901995594669543,
+        -0.08568286305570094,
+        -0.028069850035696398,
+        0.0
+      ]
+    },
+    "T7": {
+      "HF": {
+        "energies": {
+          "H2": -1.1287110109153242,
+          "O2": -149.6276689906853,
+          "H2O": -76.02684408743093
+        },
+        "reaction_energy_ev": 4.587762504572323,
+        "error_vs_exp": -0.3322374954276768
+      },
+      "MP2": {
+        "energies": {
+          "H2": -1.1550916256898835,
+          "O2": -149.976462717664,
+          "H2O": -76.23070957487265
+        },
+        "reaction_energy_ev": 4.755820525509727,
+        "error_vs_exp": -0.1641794744902727
+      },
+      "CCSD": {
+        "energies": {
+          "H2": -1.1634029671742285,
+          "O2": -149.97955436467217,
+          "H2O": -76.24003470503432
+        },
+        "reaction_energy_ev": 4.726865715174295,
+        "error_vs_exp": -0.19313428482570494
+      },
+      "PBE": {
+        "energies": {
+          "H2": -1.1598861888806624,
+          "O2": -150.1932807609421,
+          "H2O": -76.33330561083469
+        },
+        "reaction_energy_ev": 4.178528306780152,
+        "error_vs_exp": -0.7414716932198475
+      },
+      "PBE0": {
+        "energies": {
+          "H2": -1.1633261426367363,
+          "O2": -150.1817828088817,
+          "H2O": -76.33877199011599
+        },
+        "reaction_energy_ev": 4.601687216664562,
+        "error_vs_exp": -0.318312783335438
+      }
+    },
+    "T8": {
+      "electronic_results": {
+        "energies": {
+          "H2": -1.1550916256898835,
+          "O2": -149.976462717664,
+          "H2O": -76.23070957487265
+        },
+        "reaction_energy_ev": 4.755820525509727,
+        "error_vs_exp": -0.1641794744902727
+      },
+      "corrected_energies": {
+        "H2": {
+          "electronic": -1.1550916256898835,
+          "zpe": 0.009875546000720164,
+          "thermal": 0.0032254486211808317,
+          "entropy": -0.014839931072943733,
+          "total_g": -1.156830562140926
+        },
+        "O2": {
+          "electronic": -149.976462717664,
+          "zpe": 0.001574477884252303,
+          "thermal": 0.0032254486211808317,
+          "entropy": -0.023296920259232877,
+          "total_g": -149.9949597114178
+        },
+        "H2O": {
+          "electronic": -76.23070957487265,
+          "zpe": 0.021410030743855966,
+          "thermal": 0.003773647398693779,
+          "entropy": -0.007943473971169377,
+          "total_g": -76.21346937070128
+        }
+      },
+      "reaction_delta_g_ev": 3.2195942318978656,
+      "error_vs_experimental": -1.7004057681021343,
+      "performance_rating": "FAIR",
+      "corrections_applied": [
+        "Fixed NIST entropy values",
+        "Corrected unit conversions",
+        "Proper liquid water entropy",
+        "Eliminated conversion errors"
+      ]
+    },
+    "T9": {
+      "analysis_data": [
+        {
+          "method": "MP2",
+          "electronic_energy": 4.755820525509727,
+          "thermo_energy": 3.2195942318978656,
+          "error": -1.7004057681021343,
+          "abs_error": 1.7004057681021343,
+          "performance": "Fair",
+          "color_code": "\ud83d\udd34"
+        },
+        {
+          "method": "CCSD",
+          "electronic_energy": 4.726865715174295,
+          "thermo_energy": 3.1906394215624334,
+          "error": -1.7293605784375665,
+          "abs_error": 1.7293605784375665,
+          "performance": "Fair",
+          "color_code": "\ud83d\udd34"
+        },
+        {
+          "method": "PBE0",
+          "electronic_energy": 4.601687216664562,
+          "thermo_energy": 3.0654609230527003,
+          "error": -1.8545390769472996,
+          "abs_error": 1.8545390769472996,
+          "performance": "Fair",
+          "color_code": "\ud83d\udd34"
+        },
+        {
+          "method": "HF",
+          "electronic_energy": 4.587762504572323,
+          "thermo_energy": 3.0515362109604616,
+          "error": -1.8684637890395384,
+          "abs_error": 1.8684637890395384,
+          "performance": "Fair",
+          "color_code": "\ud83d\udd34"
+        },
+        {
+          "method": "PBE",
+          "electronic_energy": 4.178528306780152,
+          "thermo_energy": 2.642302013168291,
+          "error": -2.277697986831709,
+          "abs_error": 2.277697986831709,
+          "performance": "Fair",
+          "color_code": "\ud83d\udd34"
+        }
+      ],
+      "best_method": {
+        "method": "MP2",
+        "electronic_energy": 4.755820525509727,
+        "thermo_energy": 3.2195942318978656,
+        "error": -1.7004057681021343,
+        "abs_error": 1.7004057681021343,
+        "performance": "Fair",
+        "color_code": "\ud83d\udd34"
+      },
+      "chemical_accurate_count": 0,
+      "excellent_accurate_count": 0,
+      "good_accurate_count": 0,
+      "improvement_summary": {
+        "previous_error_magnitude": 122.0,
+        "corrected_error_magnitude": 1.7004057681021343,
+        "improvement_factor": 71.74758065903721
+      }
+    }
+  }
+}
